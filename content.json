@@ -1,0 +1,127 @@
+{
+  "meta": {
+    "name": "James Quinn",
+    "role": "Staff Software Engineer",
+    "location": "New York (Remote)",
+    "pageTitle": "James Quinn — Staff Software Engineer",
+    "pageDescription": "James Quinn — Staff Software Engineer specializing in high-throughput distributed systems, reliability, and data integrity at scale.",
+    "email": "quinn.p.jim@gmail.com",
+    "phoneDisplay": "+1 REDACTED",
+    "phoneHref": "+1REDACTED",
+    "heroSub": "I build the systems that watch your systems. A decade at Google and Bloomberg designing distributed platforms that keep millions of queries per second honest, fast, and correct."
+  },
+
+  "metrics": [
+    { "value": 6, "suffix": "M+", "label": "peak QPS monitored at Google" },
+    { "value": 24, "suffix": "x", "label": "faster ACL garbage collection" },
+    { "value": 80, "suffix": "%", "label": "improvement in alert fidelity" },
+    { "value": 10, "suffix": "M+", "label": "events/sec ingested at Bloomberg" }
+  ],
+
+  "about": {
+    "kicker": "01 — about",
+    "title": "Reliability is a design decision, not an accident.",
+    "body": "I'm a Staff Software Engineer with over a decade of experience at Google and Bloomberg designing, building, and scaling mission-critical, high-throughput distributed systems. My work centers on data-intensive platforms that process millions of queries per second — with a deep focus on system reliability, performance optimization, and data integrity. I lead teams that turn \"it broke in production\" into \"we caught it before anyone noticed,\" and I write the C++ and Python that makes that possible at scale."
+  },
+
+  "initiative": {
+    "kicker": "02 — featured initiative",
+    "title": "Teaching engineering orgs to work with AI, not around it.",
+    "badge": "current · concurrent with staff role",
+    "roleTitle": "AI Fluency & Engineering Enablement Lead",
+    "paragraphs": [
+      "Championed the adoption of an AI-native software development framework — the <strong>Elephant-Goldfish Model</strong>, a design-doc-first workflow validated through fresh-context AI review before a line of code is written — across multiple Google Product Areas, including parts of Search, DeepMind, and Core.",
+      "Built and delivered training spanning both the soft skills (change management, delegation, judgment) and hard skills (AI tool workflows, guardrails, design-doc practice) needed for teams to adopt the model. Delivered this training at the team, org, and company level at Google, and consulted with external client companies on AI adoption."
+    ],
+    "metrics": [
+      { "value": "2x", "label": "team throughput" },
+      { "value": "−50%", "label": "code review time" },
+      { "value": "↓", "label": "production rollbacks" }
+    ],
+    "footnote": "Under this model, my team shipped critical projects for Search and Core while doubling throughput and cutting review time in half — results that helped drive the framework's spread to additional product areas."
+  },
+
+  "experience": {
+    "kicker": "03 — experience",
+    "title": "Career log",
+    "entries": [
+      {
+        "type": "role",
+        "current": true,
+        "date": "Mar 2018 — Present",
+        "org": "Staff Software Engineer, Google",
+        "location": "New York (Remote)",
+        "positions": [
+          {
+            "title": "Technical Lead & Manager, Feature Monitoring",
+            "bullets": [
+              "Led and grew a team from 2 to 12 engineers across the US and India, fostering a culture of high performance and ownership.",
+              "Owned and scaled an internal monitoring platform analyzing the integrity of data pipelines and end-user features — expanding adoption from a single prototype (~35k QPS) to 5 major Product Areas (Search, Assistant, YouTube, Geo, Bard/Gemini) processing over <strong>6 million QPS</strong>.",
+              "Drove an <strong>80% improvement</strong> in alerting signal fidelity, preventing over 20 major production outages annually.",
+              "Individually contributed performance optimizations to core C++ libraries and upstream dependencies, including Google's RE2 regex engine."
+            ]
+          },
+          {
+            "title": "Technical Lead, Data Integrity & Search Infrastructure",
+            "bullets": [
+              "Led a 5-engineer team on a C++ data integrity reporting service, verifying petabytes of data at rest across Gmail, Drive, and Photos at 1.5 million QPS.",
+              "Drove a <strong>24x performance optimization</strong> in Google's proprietary ACL database (Zanzibar) garbage collection — cutting processing time from 24+ hours for 500 billion records to under 6 hours for 3 trillion records, saving an estimated 5 SWE-years annually.",
+              "Built a large-scale testing and diffing framework for search services handling 6 million QPS, directly informing feature development for a 15-person team.",
+              "Automated deployment of production ACL-aware search infrastructure serving 900k QPS."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "role",
+        "current": false,
+        "date": "Aug 2011 — Mar 2018",
+        "org": "Software Engineer, Bloomberg LP",
+        "location": "New York, NY",
+        "positions": [
+          {
+            "title": null,
+            "bullets": [
+              "Designed and built foundational log file and metric collection infrastructure in C++ and Python, handling over <strong>10 million events/sec</strong> from a fleet of 40,000+ machines (RHEL, Ubuntu, Solaris, AIX, Windows).",
+              "The platform generated over 30,000 critical alerts daily, enabling proactive monitoring for over 10,000 internal software developers.",
+              "Managed and scaled underlying data infrastructure including Splunk, ELK, Grafana, and OpenTSDB.",
+              "Used Chef for configuration management and automation across the entire server fleet."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "education",
+        "current": false,
+        "date": "Aug 2007 — May 2011",
+        "org": "B.S., Computer Science",
+        "location": "Binghamton University"
+      }
+    ]
+  },
+
+  "skills": {
+    "kicker": "04 — skills",
+    "title": "Toolbox",
+    "groups": [
+      {
+        "label": "Languages",
+        "items": ["C++ (11/14/17/20)", "Python", "SQL", "Go"]
+      },
+      {
+        "label": "Distributed Systems",
+        "items": ["Data Pipelines", "Microservices", "High-Throughput Systems", "Kafka", "Zookeeper", "gRPC"]
+      },
+      {
+        "label": "Developer Tools",
+        "items": ["Git", "gtest / gmock", "Protobuf", "ELK Stack"]
+      }
+    ]
+  },
+
+  "footer": {
+    "kicker": "05 — contact",
+    "title": "Let's talk systems.",
+    "body": "Based in Commack, NY. Open to conversations about distributed systems, reliability engineering, and AI-native engineering practice."
+  }
+}
