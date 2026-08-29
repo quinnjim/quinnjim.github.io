@@ -131,8 +131,17 @@ Consequently these are hardcoded as real values in `index.html`:
 - The `og:*` and `twitter:*` tags, including an absolute
   `og:image` URL (`https://jimquinn.com/og.png`) — relative paths are
   not reliably resolved by scrapers.
-- A `<noscript>` block carrying the name, tagline, and contact details,
+- A `<noscript>` block carrying the name, tagline, and a LinkedIn link,
   so a JS-less visitor gets the essentials instead of a blank page.
+
+One thing is deliberately kept **out** of the static HTML: the email
+address. It lives only in `content.json` and is injected at runtime, so
+the literal string never appears in `index.html` — anything that doesn't
+execute JavaScript (most naive address harvesters) never sees it. The
+footer link renders the label `meta.emailLabel` ("email") rather than the
+address itself. This is a speed bump, not real protection: `content.json`
+is a public file and a determined scraper can simply fetch it. The
+`<noscript>` fallback therefore points at LinkedIn instead of email.
 
 If the site ever needs this duplication removed, the fix is a build step
 that stamps the static tags from `content.json` — which would mean
@@ -163,7 +172,7 @@ Top-level keys and what they control:
 
 | Key | Controls |
 |---|---|
-| `meta` | Name, role/title, location, page `<title>`/meta description, hero tagline, contact email, and `links` — an array of `{ label, url }` profile links (LinkedIn etc.) rendered into the footer after the email link. A published phone number was previously carried here (`phoneDisplay` / `phoneHref`) and was removed deliberately; don't reintroduce one without a reason. |
+| `meta` | Name, role/title, location, page `<title>`/meta description, hero tagline, contact email, `emailLabel` (the visible text of the footer email link — the address itself is never rendered, see 3.2), and `links` — an array of `{ label, url }` profile links (LinkedIn etc.) rendered into the footer after the email link. A published phone number was previously carried here (`phoneDisplay` / `phoneHref`) and was removed deliberately; don't reintroduce one without a reason. |
 | `metrics` | The stat tiles under the hero. Array of `{ value, suffix, label }`. |
 | `about` | About section: `{ kicker, title, body }`. |
 | `initiative` | The featured-project card: `{ kicker, title, badge, roleTitle, paragraphs: [...], metrics: [...], footnote }`. |

@@ -45,9 +45,13 @@ function renderMeta(meta) {
   emailBtn.href = `mailto:${meta.email}`;
 
   setText('footer-name', meta.name);
+  // The address itself is deliberately NOT rendered as visible text, and
+  // does not appear in index.html at all — it only ever arrives via
+  // content.json at runtime. See README 3.2.
   const footerEmail = document.getElementById('footer-email');
   footerEmail.href = `mailto:${meta.email}`;
-  footerEmail.textContent = meta.email;
+  footerEmail.textContent = meta.emailLabel || 'email';
+  footerEmail.setAttribute('aria-label', `Email ${meta.name}`);
   // Profile links (LinkedIn, etc.) from meta.links — appended after the
   // email link, which is static in index.html.
   const linksContainer = document.getElementById('footer-links');

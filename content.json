@@ -6,6 +6,7 @@
     "pageTitle": "James Quinn — Staff Software Engineer",
     "pageDescription": "James Quinn — Staff Software Engineer specializing in high-throughput distributed systems, reliability, and data integrity at scale.",
     "email": "quinn.p.jim@gmail.com",
+    "emailLabel": "email",
     "links": [
       { "label": "LinkedIn", "url": "https://www.linkedin.com/in/james-quinn-18409157/" }
     ],
