@@ -83,11 +83,12 @@ updated without touching code.
 A headshot was initially added (hero section, with a small caption
 tag). It was later **removed at the owner's request** — the hero
 section was collapsed from a two-column (text + photo) layout to a
-single centered column. The photo file and its CSS rules were removed;
-the underlying photo-frame CSS classes were left in `style.css`
-(currently unused, harmless dead code) in case a photo is reinstated
-later — if a photo is added back permanently, that dead CSS should
-either be reused or deleted.
+single centered column. The photo file and its CSS rules were removed. The
+orphaned photo-frame classes (`.photo-frame`, `.hero-photo`,
+`.hero-photo-wrap`, `.photo-tag`) lingered as dead code for a while
+afterwards and have since been deleted from `style.css` — if a photo is
+reinstated, they need to be written fresh. `.hero-inner-no-photo` is
+still live and still used by `index.html`.
 
 ---
 
@@ -98,9 +99,12 @@ either be reused or deleted.
 | File | Purpose |
 |---|---|
 | `index.html` | Page skeleton only. Contains no resume content — only empty elements with `id`s (mount points) that `render.js` populates, plus a handful of `<template>` blocks (`tpl-metric`, `tpl-initiative-metric`, `tpl-timeline-entry`, `tpl-role-block`, `tpl-skill-group`, `tpl-chip`) used to stamp out repeating structures. |
-| `content.json` | The single source of truth for all resume content. See §3.3 for schema. Editing the site's content means editing this file and nothing else. |
+| `content.json` | The single source of truth for all resume content. See §3.4 for schema. Editing the site's content means editing this file and nothing else. |
 | `render.js` | Fetches `content.json` on page load (`fetch('content.json')`) and populates every section of `index.html` from it. Also owns the count-up animation for the metric tiles (via `IntersectionObserver`, so numbers animate in once scrolled into view) and respects `prefers-reduced-motion`. If the fetch fails (e.g. malformed JSON, or the file is missing), it replaces the page body with a plain-language error message that includes the fix for the most common cause (previewing via `file://` instead of a local server). |
 | `style.css` | All visual styling. Defines the design tokens (CSS custom properties for color, font, spacing) at the top, then component-level styles. No content lives here. |
+| `og.png` | 1200×630 social preview image (Open Graph / Twitter card), referenced by absolute URL from `index.html`. Generated to match the site's design tokens; regenerate it if the name, tagline, or headline metrics change. |
+| `favicon.svg` | Vector favicon (`JQ` monogram + green status dot) used by modern browsers. |
+| `favicon.png` | 180×180 raster fallback favicon / `apple-touch-icon`. |
 | `CNAME` | Single-line file (GitHub Pages convention) containing the custom domain, telling GitHub Pages which domain to serve this repo at. |
 | `README.md` | This document. |
 
@@ -109,7 +113,32 @@ Files that existed in earlier iterations and were later removed:
   split was introduced. If present in an older checkout, delete it.
 - `img/headshot.jpg` — removed along with the photo feature (§2.5).
 
-### 3.2 Rendering flow
+### 3.2 Metadata and crawlers — an exception to "no content in HTML"
+
+The content/markup split in §2.2 has one deliberate exception. Social
+scrapers (LinkedIn, Slack, iMessage, Facebook) and many search crawlers
+**do not execute JavaScript**, so anything `render.js` injects at runtime
+is invisible to them. Before this was addressed, the static document
+they saw had the literal title `Loading…` and an empty description,
+which is what a shared link previewed as.
+
+Consequently these are hardcoded as real values in `index.html`:
+
+- `<title>` and `<meta name="description">` — still overwritten at
+  runtime by `renderMeta()` from `content.json`, so **the two copies
+  must be kept in sync by hand** when `meta.pageTitle` /
+  `meta.pageDescription` change.
+- The `og:*` and `twitter:*` tags, including an absolute
+  `og:image` URL (`https://jimquinn.com/og.png`) — relative paths are
+  not reliably resolved by scrapers.
+- A `<noscript>` block carrying the name, tagline, and contact details,
+  so a JS-less visitor gets the essentials instead of a blank page.
+
+If the site ever needs this duplication removed, the fix is a build step
+that stamps the static tags from `content.json` — which would mean
+giving up the "no build tooling" constraint in §1.
+
+### 3.3 Rendering flow
 
 1. Browser loads `index.html`. At this point the page shows only
    structural chrome (nav, empty section headers) — no resume content
@@ -128,13 +157,13 @@ Files that existed in earlier iterations and were later removed:
    like `<strong>`, which use `innerHTML` deliberately (e.g. bullet
    points that bold a key metric).
 
-### 3.3 `content.json` schema
+### 3.4 `content.json` schema
 
 Top-level keys and what they control:
 
 | Key | Controls |
 |---|---|
-| `meta` | Name, role/title, location, page `<title>`/meta description, hero tagline, contact info (email, phone) |
+| `meta` | Name, role/title, location, page `<title>`/meta description, hero tagline, contact email, and `links` — an array of `{ label, url }` profile links (LinkedIn etc.) rendered into the footer after the email link. A published phone number was previously carried here (`phoneDisplay` / `phoneHref`) and was removed deliberately; don't reintroduce one without a reason. |
 | `metrics` | The stat tiles under the hero. Array of `{ value, suffix, label }`. |
 | `about` | About section: `{ kicker, title, body }`. |
 | `initiative` | The featured-project card: `{ kicker, title, badge, roleTitle, paragraphs: [...], metrics: [...], footnote }`. |
@@ -153,7 +182,7 @@ Notes:
   trailing connector line in the timeline UI (handled in `render.js`,
   not configurable via JSON).
 
-### 3.4 Local preview
+### 3.5 Local preview
 
 `render.js` uses `fetch()`, which browsers block against `file://`
 URLs for security. Opening `index.html` by double-clicking it will
@@ -165,7 +194,7 @@ python3 -m http.server 8080
 
 then visit `http://localhost:8080`.
 
-### 3.5 Deployment
+### 3.6 Deployment
 
 Static files only, no build step. Push to the `main` branch of the
 GitHub Pages repo and Pages rebuilds automatically (typically within a
@@ -189,14 +218,22 @@ Pages, not to any particular domain or account):
 - Source: [GitHub Docs — Managing a custom domain for your GitHub Pages site](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site)
 - After DNS verifies in the repo's Pages settings, enable "Enforce
   HTTPS" (may take some time to become available while GitHub issues a
-  certificate).
+  certificate). This is **enabled** for jimquinn.com — GitHub issued the
+  certificate and `https_enforced` is on, so plain `http://` requests
+  redirect. Certificates renew automatically; no action needed.
 
 ---
 
 ## 4. Open questions / possible future work
 
-- Photo: currently removed. If reinstated, either reuse the existing
-  (currently unused) `.photo-frame` / `.hero-photo` CSS or clean it up.
+- Photo: currently removed, and its CSS has now been deleted too (§2.5).
+  Reinstating one means writing the styles again.
+- The static `<title>`/description in `index.html` duplicate
+  `content.json` values (§3.2) and can drift. A tiny check — even a
+  grep in CI — would catch a mismatch.
+- `og.png` is a generated raster and does not update itself when
+  `content.json` changes; the headline metrics baked into it need a
+  manual regeneration to stay truthful.
 - No automated tests or CI exist. Given the site is static content with
   no logic beyond rendering, the main regression risk is a
   `content.json` edit that doesn't match the schema `render.js`

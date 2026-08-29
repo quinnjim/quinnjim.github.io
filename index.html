@@ -3,8 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title id="page-title">Loading…</title>
-<meta id="page-description" name="description" content="">
+<!--
+  NOTE: title and description are duplicated here as real static values
+  (not left empty for render.js to fill). Social and search crawlers do
+  not execute JavaScript, so anything injected at runtime is invisible
+  to them. render.js still overwrites these from content.json:meta at
+  load time — keep the two in sync when meta.pageTitle/pageDescription
+  change. Same reasoning applies to the og:/twitter: tags below.
+-->
+<title id="page-title">James Quinn — Staff Software Engineer</title>
+<meta id="page-description" name="description" content="James Quinn — Staff Software Engineer specializing in high-throughput distributed systems, reliability, and data integrity at scale.">
+<link rel="canonical" href="https://jimquinn.com/">
+
+<!-- Open Graph (LinkedIn, Facebook, Slack, iMessage) -->
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="James Quinn">
+<meta property="og:url" content="https://jimquinn.com/">
+<meta property="og:title" content="James Quinn — Staff Software Engineer">
+<meta property="og:description" content="A decade at Google and Bloomberg designing distributed platforms that keep millions of queries per second honest, fast, and correct.">
+<meta property="og:image" content="https://jimquinn.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="James Quinn — Staff Software Engineer. Distributed systems, reliability, data integrity.">
+
+<!-- Twitter/X card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="James Quinn — Staff Software Engineer">
+<meta name="twitter:description" content="A decade at Google and Bloomberg designing distributed platforms that keep millions of queries per second honest, fast, and correct.">
+<meta name="twitter:image" content="https://jimquinn.com/og.png">
+
+<meta name="theme-color" content="#14171A">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png" sizes="180x180" type="image/png">
+<link rel="apple-touch-icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -13,6 +44,18 @@
 <body>
 
 <div class="grain"></div>
+
+<noscript>
+  <div class="noscript-banner">
+    <h1>James Quinn — Staff Software Engineer</h1>
+    <p>A decade at Google and Bloomberg designing distributed platforms that
+    keep millions of queries per second honest, fast, and correct. Focused on
+    high-throughput distributed systems, reliability, and data integrity at scale.</p>
+    <p>This page renders its content with JavaScript, which is currently disabled.
+    Reach me at <a href="mailto:quinn.p.jim@gmail.com">quinn.p.jim@gmail.com</a>
+    or on <a href="https://www.linkedin.com/in/james-quinn-18409157/">LinkedIn</a>.</p>
+  </div>
+</noscript>
 
 <!--
   This page is a content-agnostic template. All resume content lives in
@@ -105,9 +148,9 @@
       <p class="section-kicker mono" id="footer-kicker"></p>
       <h2 class="section-title" id="footer-title"></h2>
       <p class="body-text" id="footer-body"></p>
-      <div class="footer-links">
+      <div class="footer-links" id="footer-links">
         <a href="#" id="footer-email" class="footer-link"></a>
-        <a href="#" id="footer-phone" class="footer-link"></a>
+        <!-- profile links (LinkedIn etc.) appended by render.js from content.json:meta.links -->
       </div>
     </div>
   </div>

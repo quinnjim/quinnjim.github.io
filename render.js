@@ -48,9 +48,18 @@ function renderMeta(meta) {
   const footerEmail = document.getElementById('footer-email');
   footerEmail.href = `mailto:${meta.email}`;
   footerEmail.textContent = meta.email;
-  const footerPhone = document.getElementById('footer-phone');
-  footerPhone.href = `tel:${meta.phoneHref}`;
-  footerPhone.textContent = meta.phoneDisplay;
+  // Profile links (LinkedIn, etc.) from meta.links — appended after the
+  // email link, which is static in index.html.
+  const linksContainer = document.getElementById('footer-links');
+  (meta.links || []).forEach((link) => {
+    const a = document.createElement('a');
+    a.className = 'footer-link';
+    a.href = link.url;
+    a.textContent = link.label;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    linksContainer.appendChild(a);
+  });
 
   document.getElementById('year').textContent = new Date().getFullYear();
 }

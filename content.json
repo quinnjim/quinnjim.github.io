@@ -6,8 +6,9 @@
     "pageTitle": "James Quinn — Staff Software Engineer",
     "pageDescription": "James Quinn — Staff Software Engineer specializing in high-throughput distributed systems, reliability, and data integrity at scale.",
     "email": "quinn.p.jim@gmail.com",
-    "phoneDisplay": "+1 REDACTED",
-    "phoneHref": "+1REDACTED",
+    "links": [
+      { "label": "LinkedIn", "url": "https://www.linkedin.com/in/james-quinn-18409157/" }
+    ],
     "heroSub": "I build the systems that watch your systems. A decade at Google and Bloomberg designing distributed platforms that keep millions of queries per second honest, fast, and correct."
   },
 
@@ -122,6 +123,6 @@
   "footer": {
     "kicker": "05 — contact",
     "title": "Let's talk systems.",
-    "body": "Based in Commack, NY. Open to conversations about distributed systems, reliability engineering, and AI-native engineering practice."
+    "body": "Based in the New York area. Open to conversations about distributed systems, reliability engineering, and AI-native engineering practice."
   }
 }
